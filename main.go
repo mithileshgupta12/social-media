@@ -1,9 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
+
+	"github.com/mithileshgupta12/social-media/application"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+	r := application.LoadRoutes()
+
+	http.ListenAndServe(":3000", r)
 }
