@@ -6,11 +6,17 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/mithileshgupta12/social-media/application"
+	"github.com/mithileshgupta12/social-media/config"
 )
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal(err.Error())
+	}
+
+	database := config.Database{}
+	if err := database.Init(); err != nil {
+		log.Fatal(err.Error())
 	}
 
 	router := &application.Router{}
