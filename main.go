@@ -1,13 +1,21 @@
 package main
 
 import (
+	"log"
+	"net/http"
+
+	"github.com/joho/godotenv"
 	"github.com/mithileshgupta12/social-media/application"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	router := &application.Router{}
 
-	e := router.Init()
+	r := router.Init()
 
-	e.Logger.Fatal(e.Start(":8000"))
+	http.ListenAndServe(":8000", r)
 }

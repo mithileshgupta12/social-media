@@ -1,19 +1,23 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/mithileshgupta12/social-media/globals"
 )
 
 type PostHandler struct{}
 
-func (p *PostHandler) Get(c echo.Context) error {
-	type Response struct {
-		Message string
-	}
+func (p *PostHandler) Get(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 
-	return c.JSON(http.StatusOK, Response{
-		Message: "Hey",
+	err := json.NewEncoder(w).Encode(globals.SuccessResponse{
+		Message: "Got your posts!",
 	})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
